@@ -1,0 +1,60 @@
+Overview:
+- data/0/ contains the raw data files: output.csv (status), station.csv, trips.csv, weather.csv
+- Folders 1-6 contain an output.csv or a python script. The first letter in the script's name matches the folder number
+
+
+-------------------
+For the simple model: 
+
+data/1/1-parse-date-time.py
+	Converts human-readable timestamp into epoch milliseconds.
+
+	Input schema (CSV): station_id,bikes_available,docks_available,timestamp
+	Output schema (CSV): station_id,bikes_available,docks_available,timestamp (epoch milliseconds)
+	Usage: data/status.csv | python 1-parse-date-time.py > outfile.csv
+
+data/2/2-generate-test-set.py
+	Generates a test dataset where rows satisy two conditions:
+	1. day of month is less than given max day of month
+		(e.g. if max_day_of_month <5, returned test set contains the 5 days of each month, ~13%)
+	2. day of week equals the given day of week (in ISO format)
+		(day_of_week = 3 since current deterministic model is calculated for Wednesday)
+
+	Input schema (CSV): station_id,bikes_available,docks_available,timestamp (epoch milliseconds)
+	Output schema (CSV): station_id,bikes_available,docks_available,timestamp(epoch milliseconds)
+	Usage: input.csv | python 2-generate-test-set.py > output.csv
+
+data/3/output.csv
+	stored output of the simple deterministic model. Exported from the notebook
+
+--------------------
+For the ML model:
+
+data/4/4-map-model-time-to-status.py
+	Adds two new columns (1-appropriate model time; 2-true bike availability for t+30 minutes) 
+	for each row in the dataset if the timestamp of the row is within 30-minutes of a specified model time (in array). 
+	Otherwise, it drops the row from the dataset.
+
+	Input schema (CSV): station_id,bikes_available,docks_available,timestamp
+	Output schema (CSV): station_id, bikes_available, docks_available, timestamp, model_time, true_bikes_in_30_mins
+	Usage: cat data/3/output.csv | python 4-map-model-time-to-status > data/4/output.csv
+
+data/5/5-generate-machine-learning-set2
+	Adds the following discretized datetime columns to the dataset: 
+	1. ISO day of week (1-7)
+	2. ISO month (1-12)
+	3. Commuter flags as 3 binary columns
+		a) non-commute hours (1/0)
+		b) AM commute (1/0) - status update between 7 and 09:00
+		c) PM commute (1/0) - status update between 16 and 18:00 
+
+	Input schema (CSV): station_id,bikes_available,docks_available,timestamp
+	Output schema (CSV): station_id,bikes_available,docks_available,timestamp, day_of_week, month, noncommute hours, AM_commute, PM_commute
+	Usage: cat data/1/output.csv | python data/5/5-generate-machine-learning-set2.py > data/5/output.csv
+
+data/6/6-generate-true-bikes-in-30-mins.py
+	Adds the true number of bikes at a station in t+30 mins.
+
+	Input schema (CSV): station_id,bikes_available,docks_available,timestamp, day_of_week, month, commute_hours
+	Output schema (CSV): station_id,bikes_available,docks_available,timestamp, day_of_week, month, commute_hours, true_bikes_in_30_mins
+	Usage: cat data/5/output.csv | python data/6/6-generate-true-bikes-in-30-mins.py > data/6/output.csv

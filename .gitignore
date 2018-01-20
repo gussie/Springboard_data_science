@@ -2,4 +2,4 @@
 /data/
 .ipynb_checkpoint
 /Predicting_Life_Expectancy/data/
-/Bike_share_availability_classifier/data/
+/Bike_share_availability_classifier/data/*/*.csv
