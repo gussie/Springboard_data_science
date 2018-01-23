@@ -11752,10 +11752,9 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Predicting-bike-availability-for-San-Francisco's-bike-share-program">Predicting bike availability for San Francisco's bike share program<a class="anchor-link" href="#Predicting-bike-availability-for-San-Francisco's-bike-share-program">&#182;</a></h1><p>Bike share programs are cropping up in cities across the world, providing a flexible transportation option for professionals and tourists alike. Bike share systems are commonly built with "docking stations" throughout the city where users can check out and return bikes. In 2013, San Francisco launched their bike share program which, as of 2015, had 70 stations throughout the city.</p>
-<p>Bike share programs offer challenges for both the program owners (cities) and users (riders). For example, cities often manually redistribute bikes between stations to ensure availability of both bikes and docks (to return bikes). Cities also need to use rider data to inform where future bike stations should be installed. For users, the main questions is: <strong>If I leave home/work now, will there be a bike at the nearest station when I arrive?</strong> This project focuses on user challenges of bike availability.</p>
-<p><em>The uncertainty of bikes at a given station and time causes a crucial user challenge with severe business implications.  With an unpredictable supply of bikes, rider demand can stagnate. </em></p>
+<p>Bike share programs offer challenges for both the program owners (cities) and users (riders). For example, cities often manually redistribute bikes between stations to ensure availability of both bikes and docks (slots to return bikes). Cities also need to use rider data to inform where future bike stations should be installed. For users, the main questions is: <strong>If I leave home/work now, will there be a bike at the nearest station when I arrive?</strong> The uncertainty of bikes at a given station also has severe business implications, as unpredictable bike supply can deter ridership and stagnate demand. This project focuses on user challenges of bike availability.</p>
 <p>This project evaluates current ridership trends and seeks to predict bike availability (within 30 minutes of a request) for the San Francisco bike share system. The three main sections of this project include: exploratory data analysis, a simple deterministic model, and two versions of machine learned models. Comparative evaluation of the models indicates that the machine learned model with advanced feature engineering indeed out-performs the deterministic and naive machine learning model.</p>
-<p>This project uses the following publicly available data (source: <a href="https://www.kaggle.com/benhamner/sf-bay-area-bike-share/data">https://www.kaggle.com/benhamner/sf-bay-area-bike-share/data</a>):</p>
+<p>The following publicly available data are used (source: <a href="https://www.kaggle.com/benhamner/sf-bay-area-bike-share/data">https://www.kaggle.com/benhamner/sf-bay-area-bike-share/data</a>):</p>
 <ul>
 <li>status: minute-by-minute update of the number of bikes and number of docks available for each of the 70 stations</li>
 <li>weather: zip-level daily weather patterns for the SF Bay Area</li>
@@ -11768,7 +11767,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -11795,7 +11794,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[133]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import raw data</span>
@@ -11931,7 +11930,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[155]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Clean status, weather, and trip data for EDA. For computational efficiency, most data wrangling performed </span>
@@ -17657,19 +17656,6 @@ t9KZsp6qDWsAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">&#39;data/0/output.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># initialize variables </span>
 <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span>
@@ -17687,33 +17673,10 @@ t9KZsp6qDWsAAAAASUVORK5CYII=
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-3-4f9584c051c1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      6</span> delta <span class="ansi-blue-fg">=</span> pd<span class="ansi-blue-fg">.</span>Timedelta<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">29</span><span class="ansi-blue-fg">,</span> unit<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;m&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      7</span> 
-<span class="ansi-green-fg">----&gt; 8</span><span class="ansi-red-fg"> </span>station_ids <span class="ansi-blue-fg">=</span> status<span class="ansi-blue-fg">.</span>station_id<span class="ansi-blue-fg">.</span>unique<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> n_bikes <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">2</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span> dow <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">2</span>         <span class="ansi-red-fg"># Wednesday (for datetime.dayofweek, Monday: 0)</span>
-
-<span class="ansi-red-fg">NameError</span>: name &#39;status&#39; is not defined</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[135]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Subset the status dataset by station id</span>
